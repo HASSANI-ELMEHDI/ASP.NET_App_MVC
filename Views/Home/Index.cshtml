@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AmazonCloneMVC.Models.Produit>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<style>
+    /* Container for the search bar */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+    }
+
+    /* Input field styling */
+    .search-input {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    /* Search button styling */
+    .search-button {
+        padding: 10px 20px;
+        background-color: cadetblue;
+        color: white;
+        border: 1px solid cadetblue;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+        /* Search button hover effect */
+        .search-button:hover {
+            background-color: cadetblue;
+        }
+</style>
+
+
+<form asp-action="Index">
+
+<div class="search-container">
+
+        <input type="text" name="searchString" class="search-input" placeholder="Rechercher...">
+    <button type="submit" class="search-button">Rechercher</button>
+</div>
+</form>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4 product-card" data-category="@item.CategorieID" data-title="@item.Description.ToLower()">
+            <div class="container page-wrapper">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="el-wrapper">
+                            <div class="box-up">
+                                <img src="@item.ImagePath" class="card-img-top img " alt="Product Image">
+                                <div class="img-info">
+                                    <div class="info-inner">
+                                        <span class="text-white fw-bold box-shadow">@Html.DisplayFor(modelItem => item.ProduitName)</span>
+                                        <span class="p-company">@Html.DisplayFor(modelItem => item.Categorie.NomCategorie)</span>
+
+                                    </div>
+                                    <div class="a-size">
+                                        
+                                        <span class="text-black"> @Html.DisplayFor(modelItem => item.Description) </span>
+                                        <br /><br />
+                                        Quantité disponible : <span class="size">@Html.DisplayFor(modelItem => item.Quantite)</span>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="box-down">
+                                <div class="h-bg">
+                                    <div class="h-bg-inner"></div>
+                                </div>
+
+
+
+                                <span class="cart">
+                                    <span class="price">@Html.DisplayFor(modelItem => item.Prix) MAD</span>
+                                    <span class="add-to-cart">
+                                        <form asp-action="AddToCard">
+                                            <input name="ProduitId" type="hidden" value="@item.ProduitID" class="form-control" />
+                                            <button class="btn-outline-secondary" type="submit">Ajouter au panier</button>
+                                        </form>
+
+                                    </span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+                        
